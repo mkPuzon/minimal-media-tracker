@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { MediaItem } from '$lib/types';
+    import { MEDIA_TYPES } from '$lib/types';
 
     let { onAdd } = $props<{
         onAdd: (item: MediaItem) => void;
@@ -9,14 +10,6 @@
         title: '',
         type: '' 
     });
-
-    // function toMediaItem(): MediaItem {
-    //     return {
-    //         id: Date.now(),
-    //         title: form.title,
-    //         type: form.type
-    //     };
-    // }
 
     function add_item() {
         if(form.title && form.type) {
@@ -38,14 +31,15 @@
     <input id='title' type='text' bind:value={form.title}>
 
     <label for=type>Media type:</label>
-    <input id='type' type='text' bind:value={form.type}>
+    <select bind:value={form.type}>
+        {#each MEDIA_TYPES as type (type)}
+            <option value={type}>{type}</option>
+        {/each}
+    </select>
 
     <button onclick={add_item}>Add log</button>
 </div>
 
-<pre>{JSON.stringify(form, null, 2)}</pre>
-
 
 <style>
-
 </style>
