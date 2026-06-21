@@ -1,13 +1,10 @@
 :root {
     margin: 0;
     padding: 0;
+
     width: 100vw;
     height: 100vh;
-    background-image: url('/background.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+
     color: white;
     --accent: rgb(225, 177, 56);
 }
@@ -22,6 +19,21 @@
 }
 ::-webkit-scrollbar {
     display: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    min-height: 100vh;
+}
+
+header {
+    position: sticky;
+    top: 32px;
+    width: 70vw;
 }
 
 h1 {

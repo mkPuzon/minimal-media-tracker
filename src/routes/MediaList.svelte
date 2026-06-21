@@ -8,6 +8,10 @@
         editing_id = editing_id === id ? null : id;
     }
 
+    function remove_entry(id: number) {
+        media_list = media_list.filter(item => item.id !==id);
+    }
+
 </script>
 
 <div class="log">
@@ -19,6 +23,7 @@
             <h4>{entry.type.toUpperCase()}</h4>
 
             <button onclick={() => toggle_edit_menu(entry.id)}>Edit</button>
+            <button onclick={() => remove_entry(entry.id)}>Delete</button>
 
             {#if editing_id == entry.id}
                 <br>
@@ -47,7 +52,7 @@
     overflow: wrap;
 }
 .media-entrys {
-    max-width: 50vw;
+    width: 50vw;
     background-color: rgb(255, 255, 255, 0.1);
     border: 4px solid white;
     border-radius: 4px;
