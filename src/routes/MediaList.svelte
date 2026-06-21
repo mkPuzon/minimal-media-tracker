@@ -1,17 +1,12 @@
 <script lang="ts">
     import { MEDIA_TYPES } from '$lib/types';
 
-    let { media_list } = $props();
+    let { media_list, onDelete } = $props();
     let editing_id = $state<number | null>(null);
 
     function toggle_edit_menu(id: number) {
         editing_id = editing_id === id ? null : id;
     }
-
-    function remove_entry(id: number) {
-        media_list = media_list.filter(item => item.id !==id);
-    }
-
 </script>
 
 <div class="log">
@@ -23,16 +18,16 @@
             <h4>{entry.type.toUpperCase()}</h4>
 
             <button onclick={() => toggle_edit_menu(entry.id)}>Edit</button>
-            <button onclick={() => remove_entry(entry.id)}>Delete</button>
+            <button onclick={() => onDelete(entry.id)}>Delete</button>
 
             {#if editing_id == entry.id}
                 <br>
-                <label for=title>New title:</label>
+                <label for='title'>New title:</label>
                 <br>
                 <input id='title' type='text' bind:value={entry.title}>
 
-                <label for=type>New type:</label>
-                <select bind:value={entry.type}>
+                <label for='type'>New type:</label>
+                <select id='type' bind:value={entry.type}>
                     {#each MEDIA_TYPES as type (type)}
                         <option value={type}>{type}</option>
                     {/each}

@@ -1,15 +1,27 @@
 <script lang="ts">
     import MediaList from './MediaList.svelte'
     import AddMediaForm from './AddMediaForm.svelte';
+    import { browser } from '$app/environment';
     import type { MediaItem } from '$lib/types';
     import type { MediaInput } from '$lib/types';
 
-    let media_list = $state<MediaItem[]>([
-        { id: 0, title: "The Hobbit", type: "movie"},
-        { id: 1, title: "1984", type: "book"}
-    ]);
 
-    let next_id = $state(2);
+    const LIST_KEY = 'media_list';
+    const ID_KEY = 'next_id';
+
+    // init media_list + id in case first time user visits
+    let media_list = $state<MediaItem[]>([
+        { id: 0, title: "EXAMPLE: The Hobbit", type: "book"},
+    ]);
+    let next_id = $state(1);
+
+    // fetch stored data if it exists
+    if (browser && localStorage.getItem(LIST_KEY) !== null) {
+        media_list = JSON.parse(localStorage.getItem(LIST_KEY));
+    } 
+    if (browser && localStorage.getItem(ID_KEY) !== null) {
+        next_id = parseInt(localStorage.getItem(ID_KEY));
+    }
 
     function addMedia(item: MediaInput) {
         media_list.push({
@@ -17,6 +29,32 @@
             ...item
         });
     }
+
+    function remove_entry(id: number) {
+        media_list = media_list.filter(item => item.id !== id);
+    }
+
+    // reactively log
+    $effect(() => {
+        console.log('media_list changed:', $state.snapshot(media_list));
+    })
+    $effect(() => {
+        console.log('next_id changed:', $state.snapshot(next_id));
+    })
+
+    // save state values to localStorage
+    $effect(() => {
+        if (!browser) return;
+
+        localStorage.setItem(
+            LIST_KEY,
+            JSON.stringify(media_list)
+        );
+        localStorage.setItem(
+            ID_KEY,
+            String(next_id)
+        );
+    });
 
 </script>
 
@@ -31,13 +69,13 @@
 
     <div class="spacer"></div>
 
-    <h2>Add your recent reads/watch/play/listen:</h2>
+    <h2>Add your recent read/watch/play/listen:</h2>
     <AddMediaForm onAdd={addMedia} /> 
 
     <div class="spacer"></div>
 
     <h2>==== Your log ====</h2>
-    <MediaList {media_list} />
+    <MediaList {media_list} onDelete={remove_entry}/>
 
     <div class="spacer"></div>
 

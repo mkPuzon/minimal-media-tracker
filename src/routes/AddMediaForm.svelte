@@ -27,11 +27,11 @@
 
 
 <div class="form">
-    <label for=title>Media title:</label>
-    <input id='title' type='text' bind:value={form.title}>
+    <label for='add_title'>Media title:</label>
+    <input id='add_title' type='text' bind:value={form.title}>
 
-    <label for=type>Media type:</label>
-    <select bind:value={form.type}>
+    <label for='add_type'>Media type:</label>
+    <select id='add_type' bind:value={form.type}>
         {#each MEDIA_TYPES as type (type)}
             <option value={type}>{type}</option>
         {/each}
