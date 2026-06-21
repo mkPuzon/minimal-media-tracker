@@ -76,6 +76,9 @@ main {
 hr {
     width: 70vw;
 }
+h2 {
+    margin: 16px;
+}
 header {
     position: relative;
     background-color: rgba(0, 0, 0, 1);
