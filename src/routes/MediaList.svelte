@@ -1,11 +1,30 @@
 <script lang="ts">
     import { MEDIA_TYPES } from '$lib/types';
+    import type { MediaItem } from '$lib/types';
 
     let { media_list, onDelete } = $props();
     let editing_id = $state<number | null>(null);
 
-    function toggle_edit_menu(id: number) {
-        editing_id = editing_id === id ? null : id;
+    let edit_title = $state('');
+    let edit_type = $state('');
+    let edit_date = $state('');
+
+    function toggle_edit_menu(entry: MediaItem) {
+        if (editing_id == entry.id) {
+            entry.title = edit_title;
+            entry.type = edit_type;
+            entry.date = new Date(edit_date);
+
+            edit_title = '';
+            edit_type = '';
+            edit_date = '';
+            editing_id = null;
+        } else { // load entry into buffer
+            editing_id = entry.id;
+            edit_title = entry.title;
+            edit_type = entry.type;
+            edit_date = entry.date.toISOString().split('T')[0];
+        }
     }
 </script>
 
@@ -17,22 +36,22 @@
             <h3>{entry.title}</h3>
             <h4>{entry.type.toUpperCase()}</h4>
 
-            <button onclick={() => toggle_edit_menu(entry.id)}>{editing_id === entry.id ? 'Close Edit Menu' : 'Edit'}</button>
+            <button onclick={() => toggle_edit_menu(entry)}>{editing_id === entry.id ? 'Save & Close' : 'Edit'}</button>
             <button onclick={() => onDelete(entry.id)}>Delete</button>
 
             {#if editing_id == entry.id}
-                <label for='title'>Title:</label>
-                <input id='title' type='text' bind:value={entry.title}>
+                <label for='title-{entry.id}'>Title:</label>
+                <input id='title-{entry.id}' type='text' bind:value={edit_title}>
 
-                <label for='type'>Type:</label>
-                <select id='type' bind:value={entry.type}>
+                <label for='type-{entry.id}'>Type:</label>
+                <select id='type-{entry.id}' bind:value={edit_type}>
                     {#each MEDIA_TYPES as type (type)}
                         <option value={type}>{type}</option>
                     {/each}
                 </select>
 
-                <label for='date'>Date:</label>
-                <input id='date' type='date' bind:value={entry.date}>
+                <label for='date-{entry.id}'>Date:</label>
+                <input id='date-{entry.id}' type='date' bind:value={edit_date}>
         {/if}
         </div>
     {/each}
