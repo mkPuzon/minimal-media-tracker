@@ -11,7 +11,7 @@
 
     // init media_list + id in case first time user visits
     let media_list = $state<MediaItem[]>([
-        { id: 0, title: "EXAMPLE: The Hobbit", type: "book"},
+        { id: 0, title: "EXAMPLE: The Hobbit", type: "book", date: new Date(2024, 1, 27)},
     ]);
     let next_id = $state(1);
 

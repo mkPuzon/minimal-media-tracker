@@ -17,24 +17,22 @@
             <h3>{entry.title}</h3>
             <h4>{entry.type.toUpperCase()}</h4>
 
-            <button onclick={() => toggle_edit_menu(entry.id)}>Edit</button>
+            <button onclick={() => toggle_edit_menu(entry.id)}>{editing_id === entry.id ? 'Close Edit Menu' : 'Edit'}</button>
             <button onclick={() => onDelete(entry.id)}>Delete</button>
 
             {#if editing_id == entry.id}
-                <br>
-                <label for='title'>New title:</label>
-                <br>
+                <label for='title'>Title:</label>
                 <input id='title' type='text' bind:value={entry.title}>
 
-                <label for='type'>New type:</label>
+                <label for='type'>Type:</label>
                 <select id='type' bind:value={entry.type}>
                     {#each MEDIA_TYPES as type (type)}
                         <option value={type}>{type}</option>
                     {/each}
                 </select>
-                <br>
-                <button onclick={() => toggle_edit_menu(entry.id)}>Close Edit Menu</button>
 
+                <label for='date'>Date:</label>
+                <input id='date' type='date' bind:value={entry.date}>
         {/if}
         </div>
     {/each}

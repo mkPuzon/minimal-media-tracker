@@ -8,18 +8,21 @@
 
     let form = $state({
         title: '',
-        type: '' 
+        type: '',
+        date: '', 
     });
 
     function add_item() {
         if(form.title && form.type) {
             onAdd({
                 title: form.title,
-                type: form.type
+                type: form.type,
+                date: form.date
             });
 
             form.title = '';
             form.type = '';
+            form.date = '';
         }
     }
 
@@ -36,6 +39,9 @@
             <option value={type}>{type}</option>
         {/each}
     </select>
+
+    <label for='add_date'>Date:</label>
+    <input id='add_date' type='date' bind:value={form.date}>
 
     <button onclick={add_item}>Add log</button>
 </div>

@@ -11,9 +11,11 @@ export type MediaItem = {
     id: number;
     title: string;
     type: MediaType;
+    date: Date;
 };
 
 export type MediaInput = {
     title: string;
     type: MediaType;
+    date: Date;
 };
