@@ -13,7 +13,7 @@
         if (editing_id == entry.id) {
             entry.title = edit_title;
             entry.type = edit_type;
-            entry.date = edit_date;
+            entry.date = new Date(edit_date);
 
             edit_title = '';
             edit_type = MEDIA_TYPES[0];
@@ -26,6 +26,17 @@
             edit_date = entry.date;
         }
     }
+
+    function format_date(date: Date) {
+
+        const d = date instanceof Date ? date : new Date(date);
+
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+    }
 </script>
 
 <div class="log">
@@ -34,7 +45,7 @@
         <div class="media-entry">
 
             <h3>{entry.title}</h3>
-            <h4>{entry.type.toUpperCase()} -- {entry.date}</h4>
+            <h4>{entry.type.toUpperCase()} -- {format_date(entry.date)}</h4>
 
             <button onclick={() => toggle_edit_menu(entry)}>{editing_id === entry.id ? 'Save & Close' : 'Edit'}</button>
             <button onclick={() => onDelete(entry.id)}>Delete</button>

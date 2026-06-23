@@ -2,7 +2,7 @@
     import MediaList from './MediaList.svelte'
     import AddMediaForm from './AddMediaForm.svelte';
     import { browser } from '$app/environment';
-    import type { MediaItem } from '$lib/types';
+    import { MEDIA_TYPES, type MediaItem } from '$lib/types';
     import type { MediaInput } from '$lib/types';
 
 
@@ -11,9 +11,10 @@
 
     // init media_list + id in case first time user visits
     let media_list = $state<MediaItem[]>([
-        { id: 0, title: "EXAMPLE: The Hobbit", type: "book", date: new Date(2024, 1, 27)},
+        { id: 0, title: "EXAMPLE: The Hobbit", type: MEDIA_TYPES[2], date: new Date(2024, 1, 27)},
+        { id: 1, title: "EXAMPLE: Attack on Titan", type: MEDIA_TYPES[0], date: new Date(2025, 9, 4)},
     ]);
-    let next_id = $state(1);
+    let next_id = $state(2);
 
     // fetch stored data if it exists
     if (browser && localStorage.getItem(LIST_KEY) !== null) {
