@@ -12,12 +12,13 @@ npm run dev -- --open
 ```
 
 # TODOs
-- [ ] Add option to select date for each log entry.
-- [ ] Wait for update to take effect until user saves and closes each log.
+- [x] Add option to select date for each log entry.
+- [x] Wait for update to take effect until user saves and closes each log.
+- [ ] Add confirmation to delete button.
 
 - [ ] Update interface
     - [ ] Tweak spacing of visual elements.
-    - [ ] Style buttons.
+    - [x] Style buttons.
     - [ ] Turn header into proper navbar.
     - [ ] Make footer stick to bottom of the page. 
 

@@ -6,24 +6,24 @@
     let editing_id = $state<number | null>(null);
 
     let edit_title = $state('');
-    let edit_type = $state('');
-    let edit_date = $state('');
+    let edit_type = $state<MediaItem['type']>(MEDIA_TYPES[0]);
+    let edit_date = $state(new Date());
 
     function toggle_edit_menu(entry: MediaItem) {
         if (editing_id == entry.id) {
             entry.title = edit_title;
             entry.type = edit_type;
-            entry.date = new Date(edit_date);
+            entry.date = edit_date;
 
             edit_title = '';
-            edit_type = '';
-            edit_date = '';
+            edit_type = MEDIA_TYPES[0];
+            edit_date = new Date();
             editing_id = null;
         } else { // load entry into buffer
             editing_id = entry.id;
             edit_title = entry.title;
             edit_type = entry.type;
-            edit_date = entry.date.toISOString().split('T')[0];
+            edit_date = entry.date;
         }
     }
 </script>
@@ -34,7 +34,7 @@
         <div class="media-entry">
 
             <h3>{entry.title}</h3>
-            <h4>{entry.type.toUpperCase()}</h4>
+            <h4>{entry.type.toUpperCase()} -- {entry.date}</h4>
 
             <button onclick={() => toggle_edit_menu(entry)}>{editing_id === entry.id ? 'Save & Close' : 'Edit'}</button>
             <button onclick={() => onDelete(entry.id)}>Delete</button>
@@ -89,5 +89,12 @@
     }
     .media-entry button {
         margin-top: 8px;
+    }
+button {
+    background-color: var(--accent);
+    padding: 4px;
+}
+    button:hover {
+        background-color: var(--accent-hover);
     }
 </style>

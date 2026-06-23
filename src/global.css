@@ -7,6 +7,7 @@
 
     color: white;
     --accent: rgb(225, 177, 56);
+    --accent-hover: rgb(189, 147, 42);
 }
 
 @font-face {
