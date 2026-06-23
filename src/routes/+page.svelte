@@ -11,8 +11,8 @@
 
     // init media_list + id in case first time user visits
     let media_list = $state<MediaItem[]>([
-        { id: 0, title: "EXAMPLE: The Hobbit", type: MEDIA_TYPES[2], date: new Date(2024, 1, 27)},
-        { id: 1, title: "EXAMPLE: Attack on Titan", type: MEDIA_TYPES[0], date: new Date(2025, 9, 4)},
+        { id: 0, title: "EXAMPLE: The Hobbit", type: MEDIA_TYPES[0], date: new Date(2024, 1, 27)},
+        { id: 1, title: "EXAMPLE: Attack on Titan", type: MEDIA_TYPES[2], date: new Date(2025, 9, 4)},
     ]);
     let next_id = $state(2);
 
@@ -73,7 +73,6 @@
     <h2>Add your recent read/watch/play/listen:</h2>
     <AddMediaForm onAdd={addMedia} /> 
 
-    <div class="spacer"></div>
 
     <h2>==== Your log ====</h2>
     <MediaList {media_list} onDelete={remove_entry}/>
@@ -85,8 +84,8 @@
     <div class="spacer"></div>
 
     <footer>
-        <h2>.logs (2026)</h2>
         <p>A project to learn the basics of Svelte.</p>
+        <p>© 2026</p>
     </footer>
 </main>
 
@@ -104,7 +103,7 @@
 }
 .spacer {
     position: relative;
-    height: 10vh;
+    height: 6vh;
 }
 main {
     display: flex;
@@ -139,5 +138,8 @@ footer {
     width: 70vw;
 
     padding: 16px;
+}
+p {
+    padding: 4px;
 }
 </style>

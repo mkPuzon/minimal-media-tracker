@@ -9,11 +9,15 @@
     let edit_type = $state<MediaItem['type']>(MEDIA_TYPES[0]);
     let edit_date = $state(new Date());
 
+    let del_conf_id = $state<number | null>(null);
+
     function toggle_edit_menu(entry: MediaItem) {
         if (editing_id == entry.id) {
             entry.title = edit_title;
             entry.type = edit_type;
-            entry.date = new Date(edit_date);
+            // Normalize to YYYY-MM-DD then parse as local midnight to avoid UTC off-by-one.
+            const dateStr = typeof edit_date === 'string' ? edit_date : format_date(edit_date);
+            entry.date = new Date(dateStr + 'T00:00:00');
 
             edit_title = '';
             edit_type = MEDIA_TYPES[0];
@@ -27,13 +31,14 @@
         }
     }
 
-    function format_date(date: Date) {
+    function format_date(date: Date | string) {
+        // Date-only strings (from <input type="date">) are already YYYY-MM-DD;
+        // return directly to avoid new Date() treating them as UTC midnight.
+        if (typeof date === 'string') return date.slice(0, 10);
 
-        const d = date instanceof Date ? date : new Date(date);
-
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
 
         return `${year}-${month}-${day}`;
     }
@@ -48,7 +53,16 @@
             <h4>{entry.type.toUpperCase()} -- {format_date(entry.date)}</h4>
 
             <button onclick={() => toggle_edit_menu(entry)}>{editing_id === entry.id ? 'Save & Close' : 'Edit'}</button>
-            <button onclick={() => onDelete(entry.id)}>Delete</button>
+            <button onclick={() => {
+                if (del_conf_id == null) {
+                    del_conf_id = entry.id;
+                } else if (del_conf_id == entry.id) {
+                    onDelete(entry.id)
+                    del_conf_id = null;
+                } else {
+                    del_conf_id = entry.id;
+                }
+            }}>{del_conf_id === entry.id ? 'Confirm Delete' : 'Delete'}</button>
 
             {#if editing_id == entry.id}
                 <label for='title-{entry.id}'>Title:</label>

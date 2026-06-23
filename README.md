@@ -1,25 +1,5 @@
 # .logs -- A Media Tracking Web App
-A minimal media tracker made through learning the basics of Svelte.
+A minimal media tracker for users to log when they watch/read/listen to different content. It makes use of the browser's `localStorage` (Web Storage/DOM Storage/HTML5 Storage) to store memory across site refreshes, browsers closing, and even computer restarts. Note that `localStorage` is deleted when clearing recent history & cookies.
 
-This app makes use of the browser's `localStorage` (Web Storage/DOM Storage/HTML5 Storage) to store memory across site refreshes, browsers closing, and even computer restarts. Note that `localStorage` is deleted when clearing recent history & cookies.
+<img alt=".logs interface" src="static/application.png" />
 
-Setting up a new Svelte project:
-```bash
-npx sv create <app-name>
-cd <app-name>
-npm install
-npm run dev -- --open
-```
-
-# TODOs
-- [x] Add option to select date for each log entry.
-- [x] Wait for update to take effect until user saves and closes each log.
-- [ ] Add confirmation to delete button.
-
-- [ ] Update interface
-    - [ ] Tweak spacing of visual elements.
-    - [x] Style buttons.
-    - [ ] Turn header into proper navbar.
-    - [ ] Make footer stick to bottom of the page. 
-
-- [ ] Update README.md with final project state.
